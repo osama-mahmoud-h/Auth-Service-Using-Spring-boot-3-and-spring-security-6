@@ -21,6 +21,17 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
+      - name: Load .env file into environment
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+          echo "MAIL_SERVICE_HOST=${{ secrets.MAIL_SERVICE_HOST }}" >> $GITHUB_ENV
+          echo "MAIL_SERVICE_PORT=${{ secrets.MAIL_SERVICE_PORT }}" >> $GITHUB_ENV
+          echo "MAIL_SERVICE_USERNAME=${{ secrets.MAIL_SERVICE_USERNAME }}" >> $GITHUB_ENV
+          echo "MAIL_SERVICE_PASSWORD=${{ secrets.MAIL_SERVICE_PASSWORD }}" >> $GITHUB_ENV
+      
+
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
