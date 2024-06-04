@@ -10,7 +10,6 @@ class EcommerceApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertThat(true).isEqualTo(true);
 	}
 
 }
