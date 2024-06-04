@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  app:
+    image: osamamahmoudh/fruit-delivery-server-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-server-api
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_APPLICATION_NAME: ecommerce
+      SERVER_PORT: ${PORT}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DATABASE_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      SPRING_JPA_SHOW_SQL: "true"
+      OSMAMH_OPENAPI_DEV_URL: http://localhost:8081
+      OSMAMH_OPENAPI_PROD_URL: ${OPEN_API_PRODUCTION_URL}
+      OSMAMH_APP_JWTSECRET: ${JWT_SECRET_KEY}
+      OSMAMH_APP_JWTEXPIRATIONMS: ${JWT_EXPIRE_IN_MS}
+      TOKEN_SIGNING_KEY: ${JWT_SINGING_KEY}
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 2MB
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 3MB
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+
+      SPRING_MAIL_HOST: ${MAIL_SERVICE_HOST}
+      SPRING_MAIL_PORT: ${MAIL_SERVICE_PORT}
+      SPRING_MAIL_USERNAME: ${MAIL_SERVICE_USERNAME}
+      SPRING_MAIL_PASSWORD: ${MAIL_SERVICE_PASSWORD}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT: 5000
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT: 5000
+      SPRING_JPA_PROPERTIES_JAVAX_PERSISTENCE_SCHEMA_GENERATION_CREATE_SOURCE: metadata
+      SPRING_JPA_PROPERTIES_JAVAX_PERSISTENCE_SCHEMA_GENERATION_CREATE_DATABASE_SCHEMAS: "true"
+
+    depends_on:
+      - db
+    volumes:
+      - app_data:/app/static/uploads/
+  db:
+    image: postgres:latest
+    container_name: my-server-db
+    environment:
+      POSTGRES_DB: ecommerce_ksa
+      POSTGRES_USER: osama
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+volumes:
+  postgres_data:
+  app_data:
