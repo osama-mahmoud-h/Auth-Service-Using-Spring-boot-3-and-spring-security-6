@@ -9,6 +9,9 @@ services:
     container_name: my-server-api
     ports:
       - "8081:8081"
+    env_file:
+      - .env
+      - .env-examples
     environment:
       SPRING_APPLICATION_NAME: ecommerce
       SERVER_PORT: ${PORT}
