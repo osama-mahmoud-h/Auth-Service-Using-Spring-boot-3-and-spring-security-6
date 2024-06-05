@@ -3,8 +3,6 @@ version: '3.8'
 services:
   app:
     image: osamamahmoudh/fruit-delivery-server-api:latest
-    env_file:
-      - .env
     build:
       context: .
       dockerfile: Dockerfile
