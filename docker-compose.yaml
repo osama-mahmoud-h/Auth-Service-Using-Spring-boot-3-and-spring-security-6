@@ -3,15 +3,14 @@ version: '3.8'
 services:
   app:
     image: osamamahmoudh/fruit-delivery-server-api:latest
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
     container_name: my-server-api
     ports:
       - "8081:8081"
-    env_file:
-      - .env
-      - .env-examples
     environment:
       SPRING_APPLICATION_NAME: ecommerce
       SERVER_PORT: ${PORT}

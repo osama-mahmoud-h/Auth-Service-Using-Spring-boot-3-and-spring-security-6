@@ -97,7 +97,7 @@ jobs:
 
       # check if the image is built successfully
       - name: build & run docker compose
-        run: docker-compose up -d --build --force-recreate
+        run: docker-compose --env-file .env.examples up -d --build --force-recreate
 
       - name: list running containers
         run: docker ps -a
